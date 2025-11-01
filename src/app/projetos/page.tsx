@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/lib/client";
 import { ProjectCard } from "@/components/ProjectCard";
 import { PostsGridSkeleton } from "@/components/Skeletons";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,8 @@ import { motion as m } from "framer-motion";
 import HeroPage from "@/components/HeroPage";
 import { BriefcaseIcon } from "lucide-react";
 import SectionContact from "@/components/SectionContact";
-import {Category, Project  } from "../../types/project";
-import { CATEGORIES_QUERY, PROJECTS_QUERY } from "../../sanity/queries/getProjects";
+import {Category, Project  } from "@/types/project";
+import { CATEGORIES_QUERY, PROJECTS_QUERY } from "@/sanity/queries/getProjects";
 
 
 const PROJECTS_PER_PAGE = 9;

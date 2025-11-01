@@ -1,5 +1,5 @@
 // lib/sanity.ts (ou onde está sua função getRecursos)
-import { client } from '../../lib/client'; 
+import { client } from '@/lib/client'; 
 
 export async function getRecursos() {
   

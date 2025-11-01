@@ -4,7 +4,7 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import { PortableText } from '@portabletext/react';
-import { Recurso } from '../types/recursos';
+import { Recurso } from '@/types/recursos';
 
 interface RecursosCardsProps {
   recursos: Recurso[];

@@ -2,12 +2,12 @@
 import React from "react";
 import { Timeline } from "@/components/ui/timeline";
 import Image from "next/image";
-import Perfil from "../../public/perfil-lucas.png";
+import Perfil from "@/public/perfil-lucas.png";
 import { FloatingDockDemo } from "@/components/Float";
 import { useState, useEffect } from "react";
 import DottedGlowBackground from "@/components/ui/dotted-glow-background";
 import { Button } from "@/components/ui/button";
-import { HoverEffect } from "./ui/card-hover-effect";
+import { HoverEffect } from "@/components/ui/card-hover-effect";
 import Link from "next/link";
 
 interface JornadaItem {

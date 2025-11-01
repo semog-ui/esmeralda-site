@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/live";
 import { PortableText, type SanityDocument } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
@@ -17,7 +16,7 @@ import {
   OPEN_GRAPH,
   TWITTER,
   ROBOTS_CONFIG
-} from "../../constants";
+} from "@/app/constants";
 
 
 const { projectId, dataset } = client.config();

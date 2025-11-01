@@ -3,8 +3,8 @@ import * as motion from "motion/react-client";
 import { useScroll, useTransform, motion as m } from "framer-motion";
 import { FlipWords } from "./ui/flip-words";
 import Image from "next/image";
-import Logo from "../../public/Esmeralda-logo.png";
-import { HoverBorderGradient } from "./ui/hover-border-gradient";
+import Logo from "@/public/Esmeralda-logo.png";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { useRef } from "react";
 import Link from "next/link";
 

@@ -1,5 +1,5 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "../lib/client";
+import { client } from "@/lib/client";
 import HeroSection from "@/components/HeroSection";
 import ParallaxHeader from "@/components/ParallaxHeader";
 import { SpotlightNewDemo } from "@/components/spotlight";

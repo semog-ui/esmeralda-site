@@ -7,7 +7,7 @@ import {
   OPEN_GRAPH,
   TWITTER,
   ROBOTS_CONFIG
-} from "../constants";
+} from "@/app/constants";
 
 // Buscar dados do autor para o metadata
 async function getAuthorData() {

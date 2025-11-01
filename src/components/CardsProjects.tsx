@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { WobbleCard } from "./ui/wobble-card";
+import { WobbleCard } from "@/components/ui/wobble-card";
 import { Spotlight } from "@/components/ui/spotlight-new";
 
 export function WobbleCardDemo() {

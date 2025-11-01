@@ -6,7 +6,7 @@ import {
   OPEN_GRAPH,
   TWITTER,
   ROBOTS_CONFIG
-} from "../constants";
+} from "@/app/constants";
 
 export const metadata: Metadata = {
   title: `Contato | ${SITE_NAME}`,

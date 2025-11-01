@@ -1,6 +1,6 @@
 // app/sitemap.ts
 import { MetadataRoute } from 'next'
-import { client } from '@/sanity/lib/client'
+import { client } from '@/lib/client'
 
 // Queries para dados dinâmicos do Sanity
 const PROJECTS_QUERY = `*[_type == "project"]{

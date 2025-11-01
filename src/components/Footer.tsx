@@ -6,7 +6,7 @@ import {
   TwitterIcon,
 } from "lucide-react";
 import Link from "next/link";
-import Logo from "../../public/Esmeralda-logo.png";
+import Logo from "@/public/Esmeralda-logo.png";
 import Image from "next/image"
 
 const footerLinks = [

@@ -1,8 +1,8 @@
 "use client";
 import React, { useRef } from "react";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { CardHoverEffectDemo } from "../components/CardEffect";
-import CardHomeDemo from "../components/CardHome";
+import { CardHoverEffectDemo } from "@/components/CardEffect";
+import CardHomeDemo from "@/components/CardHome";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export function SpotlightNewDemo() {
