@@ -1,14 +1,23 @@
 "use client";
 import { useRef } from "react";
 import { useScroll, useTransform, motion as m } from "framer-motion";
+import { LucideIcon } from "lucide-react";
 
 type HeroPageProps = {
   title: string;
   description: string;
-  Icon?: React.ElementType; 
+  imageSrc?: string;
+  icon?: LucideIcon | React.ElementType;
+  children?: React.ReactNode;
 };
 
-export default function HeroPage({ title, description, Icon }: HeroPageProps) {
+export default function HeroPage({
+  title,
+  description,
+  imageSrc,
+  icon: Icon,
+  children,
+}: HeroPageProps) {
   const ref = useRef(null);
 
   // 🎯 Scroll progress atrelado ao container
@@ -23,11 +32,25 @@ export default function HeroPage({ title, description, Icon }: HeroPageProps) {
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <section
+    <m.header
       ref={ref}
       className="w-full px-9 py-8 sm:py-12 md:py-16 relative overflow-hidden"
+      role="banner"
     >
-      <div className="mx-auto max-w-7xl">
+      {/* Background Image Logic */}
+      {imageSrc && (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center brightness-50 blur-sm mt-10"
+            style={{
+              backgroundImage: `url('${imageSrc}')`,
+            }}
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </>
+      )}
+
+      <div className="mx-auto max-w-7xl relative mt-20">
         <m.div
           style={{ opacity }}
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -66,7 +89,8 @@ export default function HeroPage({ title, description, Icon }: HeroPageProps) {
             </m.div>
           )}
         </m.div>
+        {children}
       </div>
-    </section>
+    </m.header>
   );
 }

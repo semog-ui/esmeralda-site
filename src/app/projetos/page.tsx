@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { X, Filter, Search } from "lucide-react";
-import { motion as m } from "framer-motion";
+
 import HeroPage from "@/components/HeroPage";
 import { BriefcaseIcon } from "lucide-react";
 import SectionContact from "@/components/SectionContact";
@@ -28,7 +28,6 @@ export default function PortfolioPage() {
   const [hasMore, setHasMore] = useState(true);
 
   const observer = useRef<IntersectionObserver | null>(null);
-  const ref = useRef(null);
 
   // fetch inicial
   useEffect(() => {
@@ -134,27 +133,12 @@ export default function PortfolioPage() {
   return (
     <>
       {/* HEADER COM PARALLAX */}
-      <m.header
-        ref={ref}
-        className="w-full px-9 py-8 sm:py-12 md:py-16 relative overflow-hidden"
-        role="banner"
-        aria-label="Cabeçalho principal da página de Projetos"
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/hero-portfolio.jpg')",
-          }}
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative mx-auto max-w-7xl">
-          <HeroPage
-            title="Projetos"
-            description="A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor."
-            Icon={BriefcaseIcon}
-          />
-        </div>
-      </m.header>
+      <HeroPage
+        title="Projetos"
+        description="A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor."
+        icon={BriefcaseIcon}
+        imageSrc="/hero-portfolio.jpg"
+      />
 
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-6 py-16">

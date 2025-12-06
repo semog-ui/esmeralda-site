@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Newspaper, X, Filter, Search } from "lucide-react";
 import HeroPage from "@/components/HeroPage";
-import { motion } from "framer-motion";
+
 import { POSTS_QUERY, CATEGORIES_QUERY } from "@/sanity/queries/postQueries";
 
 // Interface para Posts
@@ -46,7 +46,6 @@ export default function BlogClientPage() {
   const [hasMore, setHasMore] = useState(true);
 
   const observer = useRef<IntersectionObserver | null>(null);
-  const ref = useRef(null);
 
   // Buscar dados iniciais
   useEffect(() => {
@@ -159,32 +158,12 @@ export default function BlogClientPage() {
 
   return (
     <>
-      <motion.header
-        ref={ref}
-        className="w-full px-9 py-8 sm:py-12 md:py-16 relative overflow-hidden"
-        role="banner"
-        aria-label="Cabeçalho principal da página de Blog"
-      >
-        {/* Imagem com filtro */}
-        <div
-          className="absolute inset-0 bg-cover bg-center brightness-50 blur-sm"
-          style={{
-            backgroundImage: "url('/hero-blog.jpg')",
-          }}
-        />
-
-        {/* Overlay extra para dar contraste */}
-        <div className="absolute inset-0 bg-black/40" />
-
-        {/* Conteúdo */}
-        <div className="relative mx-auto max-w-7xl">
-          <HeroPage
-            title="Blog"
-            description="Insights, tendências e conhecimento técnico sobre tecnologia, automação e inovação sustentável."
-            Icon={Newspaper}
-          />
-        </div>
-      </motion.header>
+      <HeroPage
+        title="Blog"
+        description="Insights, tendências e conhecimento técnico sobre tecnologia, automação e inovação sustentável."
+        icon={Newspaper}
+        imageSrc="/hero-blog.jpg"
+      />
 
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-6 py-16">
