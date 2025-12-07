@@ -17,29 +17,31 @@ interface JornadaItem {
 
 export const Jornada = [
   {
-    title: "Porque eu não queria apenas criar software — queria criar sistemas de pensamento.",
-    description: "Transformando código em filosofia digital"
+    title:
+      "Porque eu não queria apenas criar software — queria criar sistemas de pensamento.",
+    description: "Transformando código em filosofia digital",
   },
   {
     title: "Porque a tecnologia é o novo alfabeto da consciência.",
-    description: "Escrevendo o futuro com linhas de código"
+    description: "Escrevendo o futuro com linhas de código",
   },
   {
     title: "Porque o caos da tecnologia precisava de sentido.",
-    description: "Organizando a complexidade digital"
+    description: "Organizando a complexidade digital",
   },
   {
     title: "Porque a tecnologia é a nova forma de expressão artística.",
-    description: "Codificação como arte contemporânea"
+    description: "Codificação como arte contemporânea",
   },
   {
-    title: "O nome Esmeralda carrega essa ideia: lapidar o bruto até ele brilhar.",
-    description: "Da ideia bruta à solução polida"
+    title:
+      "O nome Esmeralda carrega essa ideia: lapidar o bruto até ele brilhar.",
+    description: "Da ideia bruta à solução polida",
   },
   {
     title: "Porque acredito que cada linha de código pode mudar uma realidade.",
-    description: "Programação como instrumento de transformação social"
-  }
+    description: "Programação como instrumento de transformação social",
+  },
 ];
 
 function DottedGlowBackgroundDemoSecond() {
@@ -73,9 +75,7 @@ function DottedGlowBackgroundDemoSecond() {
         </div>
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button variant="default" className="text-sm" asChild>
-            <Link href="/recursos">
-              Ver Recursos
-            </Link>
+            <Link href="/recursos">Ver Recursos</Link>
           </Button>
         </div>
       </div>
@@ -129,6 +129,7 @@ export function TimelineDemo() {
                     height={640}
                     className="w-64 h-80 lg:w-72 lg:h-96 rounded-lg object-cover shadow-2xl transition-all duration-500 group-hover:scale-105"
                     priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
 
                   {/* Overlay sutil na imagem */}
@@ -144,7 +145,6 @@ export function TimelineDemo() {
 
             {/* Container do Texto - Mais organizado e profissional */}
             <div className="lg:col-span-7 space-y-6 lg:space-y-8">
-
               {/* Conteúdo do texto com melhor hierarquia */}
               <div className="space-y-4 lg:space-y-6">
                 <div className="bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm rounded-2xl p-6 border border-neutral-200/50 dark:border-neutral-800/50 shadow-sm hover:shadow-md transition-all duration-300">
@@ -152,7 +152,10 @@ export function TimelineDemo() {
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                       Minha jornada
                     </span>{" "}
-                    começou na adolescência, explorando o mundo digital. Por anos, interagi com máquinas sem compreender sua linguagem, até descobrir que é possível traduzir pensamentos abstratos em soluções concretas através da programação.
+                    começou na adolescência, explorando o mundo digital. Por
+                    anos, interagi com máquinas sem compreender sua linguagem,
+                    até descobrir que é possível traduzir pensamentos abstratos
+                    em soluções concretas através da programação.
                   </p>
                 </div>
 
@@ -161,14 +164,16 @@ export function TimelineDemo() {
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                       Minha motivação
                     </span>{" "}
-                    vai além do "gostar de programar". É sobre compreender como cada linha de código pode criar padrões significativos, transformar complexidade em clareza e construir sistemas que não apenas funcionam, mas que carregam propósito e significado.
+                    vai além do "gostar de programar". É sobre compreender como
+                    cada linha de código pode criar padrões significativos,
+                    transformar complexidade em clareza e construir sistemas que
+                    não apenas funcionam, mas que carregam propósito e
+                    significado.
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 sm:flex-row">
                   <Button variant="default" className="text-sm" asChild>
-                    <Link href="/perfil">
-                      Saiba Mais Sobre Mim
-                    </Link>
+                    <Link href="/perfil">Saiba Mais Sobre Mim</Link>
                   </Button>
                 </div>
               </div>
@@ -188,10 +193,9 @@ export function TimelineDemo() {
             Porque ele representa clareza e brilho em meio à complexidade. Assim
             como uma esmeralda se destaca pela sua cor intensa e nitidez,
             buscamos criar soluções que iluminam processos obscuros e trazem
-            transparência para sistemas complicados.
-            O brilho, não é apenas estético, é a capacidade de traduzir
-            lógica em valor real, transformar dados em decisões e ideias em
-            ferramentas que funcionam.
+            transparência para sistemas complicados. O brilho, não é apenas
+            estético, é a capacidade de traduzir lógica em valor real,
+            transformar dados em decisões e ideias em ferramentas que funcionam.
           </p>
           <DottedGlowBackgroundDemoSecond />
         </div>

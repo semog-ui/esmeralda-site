@@ -1,4 +1,3 @@
-"use client";
 import HeroPage from "@/components/HeroPage";
 import { PhoneIcon } from "lucide-react";
 import SectionContact from "@/components/SectionContact";

@@ -1,4 +1,3 @@
-"use client";
 import HeroPage from "@/components/HeroPage";
 import { MessageCircleQuestionMark } from "lucide-react";
 import FaqSection from "@/components/FaqSection";
