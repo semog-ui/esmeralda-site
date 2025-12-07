@@ -6,8 +6,8 @@ import {
   TwitterIcon,
 } from "lucide-react";
 import Link from "next/link";
-import Logo from "../../public/Esmeralda-logo.png";
-import Image from "next/image"
+import Logo from "../../public/Esmeralda-logo.webp";
+import Image from "next/image";
 
 const footerLinks = [
   {
@@ -42,12 +42,7 @@ const Footer = () => {
       <div className="max-w-(--breakpoint-xl) mx-auto">
         <div className="py-8 flex flex-col justify-start items-center">
           {/* Logo */}
-          <Image
-            src={Logo}
-            alt="logo"
-            width={50}
-            height={50}
-          />
+          <Image src={Logo} alt="logo" width={50} height={50} />
 
           <ul className="mt-4 flex items-center gap-4 flex-wrap">
             {footerLinks.map(({ title, href }) => (
