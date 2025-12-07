@@ -1,13 +1,13 @@
 "use client";
 import { useRef } from "react";
 import { useScroll, useTransform, motion as m } from "framer-motion";
-import { LucideIcon } from "lucide-react";
 
 type HeroPageProps = {
   title: string;
   description: string;
   imageSrc?: string;
   icon?: React.ReactNode;
+  Icon?: React.ElementType;
   children?: React.ReactNode;
 };
 
@@ -16,6 +16,7 @@ export default function HeroPage({
   description,
   imageSrc,
   icon,
+  Icon,
   children,
 }: HeroPageProps) {
   const ref = useRef(null);
@@ -34,14 +35,13 @@ export default function HeroPage({
   return (
     <m.header
       ref={ref}
-      className="w-full px-9 py-8 sm:py-12 md:py-16 relative overflow-hidden"
+      className="w-full px-9 py-20 sm:py-24 md:py-32 relative overflow-hidden"
       role="banner"
     >
-      {/* Background Image Logic */}
       {imageSrc && (
         <>
           <div
-            className="absolute inset-0 bg-cover bg-center brightness-50 blur-sm mt-10"
+            className="absolute inset-0 bg-cover bg-center brightness-50 blur-sm"
             style={{
               backgroundImage: `url('${imageSrc}')`,
             }}
@@ -49,8 +49,7 @@ export default function HeroPage({
           <div className="absolute inset-0 bg-black/40" />
         </>
       )}
-
-      <div className="mx-auto max-w-7xl relative mt-20">
+      <div className="mx-auto max-w-7xl relative">
         <m.div
           style={{ opacity }}
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -64,7 +63,7 @@ export default function HeroPage({
             bg-white/10 backdrop-blur-md 
             text-white ring-1 ring-white/10 
             shadow-[0_0_24px_RGBA(0,0,0,0.25),_0_20px_60px_RGBA(0,0,0,0.35)]
-            mx-auto w-[70%]"
+            mx-auto w-[90%] md:w-[80%]"
         >
           {/* Texto com parallax */}
           <m.div
@@ -75,17 +74,27 @@ export default function HeroPage({
               <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
                 {title}
               </h2>
-              <p className="max-w-prose text-neutral-300">{description}</p>
+              <p className="max-w-prose text-neutral-300 text-lg leading-relaxed">
+                {description}
+              </p>
             </div>
           </m.div>
 
           {/* Ícone animado no lado direito */}
-          {icon && (
+          {(icon || Icon) && (
             <m.div
               style={{ y: yImage }}
-              className="pointer-events-none absolute inset-y-0 right-0 hidden md:flex items-center [&>svg]:w-32 [&>svg]:h-32 [&>svg]:text-white/70 [&>svg]:mr-10"
+              className="pointer-events-none absolute inset-y-0 right-0 hidden md:flex items-center justify-center w-1/2 opacity-30 md:opacity-100"
             >
-              {icon}
+              {/* Se for componente passado como <HeroPage Icon={User} /> */}
+              {Icon && <Icon className="w-48 h-48 text-white/10 rotate-12" />}
+
+              {/* Se for elemento passado como <HeroPage icon={<User />} /> */}
+              {icon && (
+                <div className="[&>svg]:w-48 [&>svg]:h-48 [&>svg]:text-white/10 [&>svg]:rotate-12">
+                  {icon}
+                </div>
+              )}
             </m.div>
           )}
         </m.div>
