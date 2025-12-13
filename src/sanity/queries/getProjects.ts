@@ -2,11 +2,11 @@
 export const PROJECTS_QUERY = `*[_type == "project"] | order(publishedAt desc){
   _id,
   title,
-  "slug": slug.current,
+  slug,
   mainImage,
   categories[]->{
     title,
-    "slug": slug.current
+    slug
   },
   body,
   linkDemo,
@@ -18,14 +18,14 @@ export const PROJECTS_QUERY = `*[_type == "project"] | order(publishedAt desc){
 export const CATEGORIES_QUERY = `*[_type == "category"]{
   _id,
   title,
-  "slug": slug.current
+  slug
 } | order(title asc)`;
 
 // Projeto principal (completo)
 export const PROJECT_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   _id,
   title,
-  "slug": slug.current,
+  slug,
   publishedAt,
   mainImage,
   body,
@@ -33,14 +33,14 @@ export const PROJECT_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   linkGithub,
   categories[]->{
     title,
-    "slug": slug.current
+    slug
   }
 }`;
 
 // Metadata do projeto (para SEO)
 export const PROJECT_METADATA_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   title,
-  "slug": slug.current,
+  slug,
   mainImage,
   publishedAt,
   linkDemo,
@@ -58,11 +58,11 @@ export const RELATED_PROJECTS_QUERY = `*[
 ] | order(publishedAt desc)[0...3]{
   _id,
   title,
-  "slug": slug.current,
+  slug,
   mainImage,
   categories[]->{
     title,
-    "slug": slug.current
+    slug
   },
   linkDemo,
   linkGithub,
@@ -76,11 +76,11 @@ export const RECENT_PROJECTS_QUERY = `*[
 ] | order(publishedAt desc)[0...3]{
   _id,
   title,
-  "slug": slug.current,
+  slug,
   mainImage,
   categories[]->{
     title,
-    "slug": slug.current
+    slug
   },
   linkDemo,
   linkGithub,

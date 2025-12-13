@@ -12,10 +12,10 @@ export const AUTHOR_WITH_CONTENT_QUERY = `*[_type == "author"][0]{
   "posts": *[_type == "post" && references(^._id)] | order(publishedAt desc)[0...6] {
     _id,
     title,
-    "slug": slug.current,
+    slug,
     categories[]->{
       title,
-      "slug": slug.current
+      slug
     },
     publishedAt,
     mainImage,
@@ -30,11 +30,11 @@ export const AUTHOR_WITH_CONTENT_QUERY = `*[_type == "author"][0]{
   "projects": *[_type == "project" && references(^._id)] | order(publishedAt desc)[0...6] {
     _id,
     title,
-    "slug": slug.current,
+    slug,
     mainImage,
     categories[]->{
       title,
-      "slug": slug.current
+      slug
     },
     body,
     linkDemo,

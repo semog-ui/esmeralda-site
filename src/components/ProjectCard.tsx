@@ -11,18 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, BriefcaseIcon } from "lucide-react";
 
+import { Project } from "@/types/sanity";
+
 interface ProjectCardProps {
-  project: {
-    _id: string;
-    title: string;
-    slug: string;
-    mainImage?: any;
-    categories?: Array<{ title: string; slug: string }>;
-    body?: any;
-    linkDemo?: string;
-    linkGithub?: string;
-    publishedAt?: string;
-  };
+  project: Project;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
@@ -123,7 +115,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/projetos/${project.slug}`}>Detalhes</Link>
+          <Link href={`/projetos/${project.slug.current}`}>Detalhes</Link>
         </Button>
       </CardFooter>
     </Card>

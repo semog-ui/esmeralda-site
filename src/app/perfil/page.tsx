@@ -3,13 +3,22 @@ import HeroPerfil from "@/components/HeroPerfil";
 import { BlogCard } from "@/components/BlogCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { AUTHOR_WITH_CONTENT_QUERY } from "@/sanity/queries/getAuthor";
+import { Author, Post, Project } from "@/types/sanity";
+
+interface AuthorProfile extends Author {
+  posts: Post[];
+  projects: Project[];
+  postsCount: number;
+  projectsCount: number;
+  newsletterCount: number;
+}
 
 export default async function PagePerfil() {
   const result = await sanityFetch({
     query: AUTHOR_WITH_CONTENT_QUERY,
   });
 
-  const author = result.data;
+  const author = result.data as AuthorProfile | null;
 
   if (!author) {
     return (
@@ -36,7 +45,7 @@ export default async function PagePerfil() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {author.posts.map((post: any) => (
+            {author.posts.map((post) => (
               <BlogCard
                 key={post._id}
                 post={post}
@@ -65,22 +74,9 @@ export default async function PagePerfil() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {author.projects.map((project: any, index: number) => {
-              const mappedProject = {
-                ...project,
-                categories:
-                  project.categories?.map((cat: any) => ({
-                    title: cat.title || cat,
-                    slug:
-                      cat.slug ||
-                      (typeof cat === "string"
-                        ? cat.toLowerCase().replace(/\s+/g, "-")
-                        : cat.title.toLowerCase().replace(/\s+/g, "-")),
-                  })) || [],
-              };
-
-              return <ProjectCard key={project._id} project={mappedProject} />;
-            })}
+            {author.projects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
           </div>
         </section>
       )}

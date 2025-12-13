@@ -174,12 +174,19 @@ html {
   .fixed.top-0 {
     position: fixed !important;
     z-index: 50 !important;
-  }
-  
-  /* Forçar o botão a ser clicável */
-  .px-4.py-2.rounded-md {
-    position: relative !important;
-    z-index: 100 !important;
     pointer-events: auto !important;
+  }
+}
+
+/* Typography Improvements */
+@layer components {
+  .prose-esmeralda p {
+    line-height: 1.75; /* relaxed */
+    color: oklch(0.92 0 0); /* Off-white (neutral-200/300 approx) for reduced eye strain */
+  }
+
+  .prose-esmeralda h1,
+  .prose-esmeralda h2 {
+    letter-spacing: -0.03em; /* -3% for tight/modern look */
   }
 }

@@ -10,6 +10,7 @@ export interface SanityImage {
   alt?: string;
   hotspot?: any;
   crop?: any;
+  caption?: string;
 }
 
 export interface Category {
@@ -21,6 +22,14 @@ export interface Category {
 export interface Author {
   name: string;
   image?: SanityImage;
+  bio?: PortableTextBlock[];
+  socialLinks?: {
+    github?: string;
+    linkedin?: string;
+    instagram?: string;
+    substack?: string;
+    website?: string;
+  };
 }
 
 export interface Post {

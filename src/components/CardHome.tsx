@@ -5,16 +5,7 @@ import { client } from "@/lib/client";
 import { BlogCard } from "./BlogCard";
 import { PostsGridSkeleton } from "./Skeletons";
 import Link from "next/link";
-
-interface Post extends SanityDocument {
-  title: string;
-  slug: string;
-  categories?: any[];
-  publishedAt: string;
-  mainImage?: any;
-  excerpt?: string;
-  author?: { name: string; image?: any };
-}
+import { Post } from "@/types/sanity";
 
 interface CardHomeDemoProps {
   limit?: number;
@@ -32,13 +23,16 @@ export default function CardHomeDemo({
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const POSTS_QUERY = `*[
+  // Buscar posts do Sanity
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const POSTS_QUERY = `*[
     _type == "post"
     && defined(slug.current)
   ]|order(publishedAt desc)[0...${limit}]{
     _id, 
     title, 
-    "slug": slug.current, 
+    slug, 
     categories[]->{
       title,
       slug
@@ -52,9 +46,6 @@ export default function CardHomeDemo({
     }
   }`;
 
-  // Buscar posts do Sanity
-  useEffect(() => {
-    const fetchPosts = async () => {
       try {
         const data = await client.fetch<Post[]>(POSTS_QUERY);
         setPosts(data || []);
