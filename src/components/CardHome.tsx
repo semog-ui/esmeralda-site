@@ -4,6 +4,7 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/lib/client";
 import { BlogCard } from "./BlogCard";
 import { PostsGridSkeleton } from "./Skeletons";
+import Link from "next/link";
 
 interface Post extends SanityDocument {
   title: string;
@@ -83,7 +84,7 @@ export default function CardHomeDemo({
           {/* Link "Veja mais" opcional */}
           {showViewMore && (
             <div className="mt-2">
-              <a
+              <Link
                 href="/blog"
                 className="inline-flex items-center text-sm md:text-base text-neutral-400 hover:text-white transition-all duration-300 group"
               >
@@ -91,7 +92,7 @@ export default function CardHomeDemo({
                 <span className="ml-1 group-hover:translate-x-1 transition-transform duration-300">
                   {">"}
                 </span>
-              </a>
+              </Link>
             </div>
           )}
         </div>

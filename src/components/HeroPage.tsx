@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { useScroll, useTransform, motion as m } from "framer-motion";
+import Image from "next/image"; // Importação essencial para performance
 
 type HeroPageProps = {
   title: string;
@@ -38,18 +39,26 @@ export default function HeroPage({
       className="w-full px-9 py-20 sm:py-24 md:py-32 relative overflow-hidden"
       role="banner"
     >
+      {/* OTIMIZAÇÃO DE PERFORMANCE: Substituição de background-image por Next/Image */}
       {imageSrc && (
         <>
-          <div
-            className="absolute inset-0 bg-cover bg-center brightness-50 blur-sm"
-            style={{
-              backgroundImage: `url('${imageSrc}')`,
-            }}
-          />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={imageSrc}
+              alt={title}
+              fill
+              priority
+              quality={85}
+              sizes="100vw"
+              className="object-cover object-center brightness-50 blur-sm"
+            />
+          </div>
+          {/* Mantém o overlay escuro para contraste do texto */}
+          <div className="absolute inset-0 bg-black/40 z-0" />
         </>
       )}
-      <div className="mx-auto max-w-7xl relative">
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <m.div
           style={{ opacity }}
           initial={{ opacity: 0, y: 40, scale: 0.95 }}

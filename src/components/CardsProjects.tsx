@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { WobbleCard } from "@/components/ui/wobble-card";
 import { Spotlight } from "@/components/ui/spotlight-new";
+import Image from "next/image";
 
 export function WobbleCardDemo() {
   const ref = useRef(null);
@@ -52,12 +53,12 @@ export function WobbleCardDemo() {
               Construindo o futuro com propósito e precisão.
             </h2>
             <p className="mt-4 text-left text-base text-neutral-300">
-              A Esmeralda une lógica, design e automação para transformar sistemas
-              complexos em soluções inteligentes e acessíveis.
+              A Esmeralda une lógica, design e automação para transformar
+              sistemas complexos em soluções inteligentes e acessíveis.
             </p>
           </div>
 
-          <img
+          <Image
             src="/linear.webp"
             width={500}
             height={500}
@@ -97,11 +98,12 @@ export function WobbleCardDemo() {
             </h2>
             <p className="mt-4 max-w-[30rem] text-left text-base text-neutral-300">
               Cada projeto é uma lapidação — da ideia à execução — onde o brilho
-              está em transformar complexidade em clareza, e código em propósito.
+              está em transformar complexidade em clareza, e código em
+              propósito.
             </p>
           </div>
 
-          <img
+          <Image
             src="/linear.webp"
             width={500}
             height={500}

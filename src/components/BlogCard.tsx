@@ -4,22 +4,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
 import { urlFor } from "@/lib/client";
 import Image from "next/image";
-
-interface Category {
-  title: string;
-  slug: { current: string };
-}
-
-interface Post {
-  _id: string;
-  title: string;
-  slug: string;
-  categories?: Category[];
-  publishedAt: string;
-  mainImage?: any;
-  excerpt?: string;
-  author?: { name: string; image?: any };
-}
+import { Post, Category } from "@/types/sanity";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 interface BlogCardProps {
   post: Post;
@@ -40,7 +26,8 @@ export function BlogCard({
   showDate = true,
   className = "",
 }: BlogCardProps) {
-  const getImageUrl = (image: any) => {
+  // Tipagem correta: source é SanityImageSource ou undefined
+  const getImageUrl = (image: SanityImageSource | undefined) => {
     if (!image) return null;
     try {
       const urlBuilder = urlFor(image);
@@ -54,10 +41,10 @@ export function BlogCard({
     }
   };
 
-  const getAuthorImageUrl = (author: any) => {
-    if (!author?.image) return null;
+  const getAuthorImageUrl = (authorImage: SanityImageSource | undefined) => {
+    if (!authorImage) return null;
     try {
-      const urlBuilder = urlFor(author.image);
+      const urlBuilder = urlFor(authorImage);
       return urlBuilder?.width(32).height(32).url() || null;
     } catch (error) {
       console.error("Erro ao gerar URL do autor:", error);
@@ -66,14 +53,14 @@ export function BlogCard({
   };
 
   const imageUrl = getImageUrl(post.mainImage);
-  const authorImageUrl = getAuthorImageUrl(post.author);
+  const authorImageUrl = getAuthorImageUrl(post.author?.image);
 
   return (
     <Card
       className={`shadow-none py-0 gap-3 hover:shadow-lg transition-all duration-300 group h-full flex flex-col ${className}`}
     >
       <CardHeader className="p-0">
-        <Link href={`/blog/${post.slug}`} className="block">
+        <Link href={`/blog/${post.slug.current}`} className="block">
           {imageUrl ? (
             <div className="aspect-video rounded-t-lg overflow-hidden">
               <Image
@@ -81,7 +68,6 @@ export function BlogCard({
                 alt={post.title}
                 width={imageSize.width}
                 height={imageSize.height}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
@@ -97,13 +83,11 @@ export function BlogCard({
         {/* Categorias */}
         {showCategories && post.categories && post.categories.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
-            {post.categories
-              .slice(0, 2)
-              .map((category: Category, index: number) => (
-                <Badge key={index} variant="secondary" className="text-xs">
-                  {category.title}
-                </Badge>
-              ))}
+            {post.categories.slice(0, 2).map((category, index) => (
+              <Badge key={index} variant="secondary" className="text-xs">
+                {category.title}
+              </Badge>
+            ))}
             {post.categories.length > 2 && (
               <Badge variant="outline" className="text-xs">
                 +{post.categories.length - 2}
@@ -112,21 +96,19 @@ export function BlogCard({
           </div>
         )}
 
-        {/* Título */}
-        <Link href={`/blog/${post.slug}`} className="flex-1">
+        {/* Resto do componente mantém igual, pois 'post' agora está tipado */}
+        <Link href={`/blog/${post.slug.current}`} className="flex-1">
           <h3 className="text-lg font-semibold tracking-tight line-clamp-2 hover:text-primary transition-colors mb-3">
             {post.title}
           </h3>
         </Link>
 
-        {/* Resumo */}
         {showExcerpt && post.excerpt && (
           <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-1">
             {post.excerpt}
           </p>
         )}
 
-        {/* Autor e Data */}
         {(showAuthor || showDate) && (
           <div className="flex items-center justify-between pt-4 border-t border-border mt-auto">
             {showAuthor && (

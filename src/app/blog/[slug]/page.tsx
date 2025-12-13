@@ -6,6 +6,7 @@ import { client } from "@/lib/client";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
+import { ReadingProgress } from "@/components/ReadingProgress";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import {
   POST_QUERY,
@@ -248,6 +249,7 @@ export default async function PostPage({
 
   return (
     <>
+      <ReadingProgress />
       {/* Structured Data para SEO */}
       <PostStructuredData post={post} />
 

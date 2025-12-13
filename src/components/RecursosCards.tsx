@@ -3,8 +3,9 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
-import { PortableText } from '@portabletext/react';
-import { Recurso } from '@/types/recursos';
+import { PortableText } from "@portabletext/react";
+import { Recurso } from "@/types/recursos";
+import Image from "next/image";
 
 interface RecursosCardsProps {
   recursos: Recurso[];
@@ -56,7 +57,7 @@ export function RecursosCards({ recursos }: RecursosCardsProps) {
           />
         )}
       </AnimatePresence>
-      
+
       <AnimatePresence>
         {active ? (
           <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-[100] p-4">
@@ -71,14 +72,14 @@ export function RecursosCards({ recursos }: RecursosCardsProps) {
             >
               <CloseIcon />
             </motion.button>
-            
+
             <motion.div
               layoutId={`card-${active._id}-${id}`}
               ref={ref}
               className="w-full max-w-[500px] max-h-[85vh] flex flex-col bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden"
             >
               <motion.div layoutId={`image-${active._id}-${id}`}>
-                <img
+                <Image
                   width={200}
                   height={200}
                   src={active.mainImage.asset.url}
@@ -117,7 +118,7 @@ export function RecursosCards({ recursos }: RecursosCardsProps) {
                     {active.ctaText || "Visitar"}
                   </motion.a>
                 </div>
-                
+
                 <div className="pt-4 relative px-4">
                   <motion.div
                     layout
@@ -145,7 +146,7 @@ export function RecursosCards({ recursos }: RecursosCardsProps) {
           >
             <div className="flex gap-4 flex-col w-full">
               <motion.div layoutId={`image-${recurso._id}-${id}`}>
-                <img
+                <Image
                   width={100}
                   height={100}
                   src={recurso.mainImage.asset.url}

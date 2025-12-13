@@ -82,23 +82,7 @@ export const ROBOTS_CONFIG = {
 
 // ===== FAVICON CONFIG =====
 export const FAVICON_CONFIG = {
-  icon: "/favicon.ico",
-  shortcut: "/favicon-16x16.png",
-  apple: "/apple-touch-icon.png",
-  other: [
-    {
-      rel: "icon" as const,
-      type: "image/png" as const,
-      sizes: "32x32",
-      url: "/favicon-32x32.png",
-    },
-    {
-      rel: "icon" as const,
-      type: "image/png" as const,
-      sizes: "16x16",
-      url: "/favicon-16x16.png",
-    },
-  ],
+  icon: '/logo-100.webp',
 };
 
 // ===== CORES DO TEMA =====

@@ -6,9 +6,10 @@ import {
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
-} from "motion/react";
+} from "framer-motion";
 import Image from "next/image";
 import React, { useState } from "react";
+import Link from "next/link";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -227,21 +228,22 @@ export const MobileNavToggle = ({
 
 export const NavbarLogo = () => {
   return (
-    <a
+    <Link
       href="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
       <Image
-        src="/Esmeralda-logo.webp"
-        alt="logo"
+        src="/logo-100.webp"
+        alt="logo Esmeralda"
         width={50}
         height={50}
         priority
+        quality={75}
       />
       <span className="font-medium text-black text-xl dark:text-white">
         Esmeralda
       </span>
-    </a>
+    </Link>
   );
 };
 

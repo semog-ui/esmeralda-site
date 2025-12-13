@@ -33,7 +33,7 @@ const SectionContact = () => (
               className="font-medium text-primary"
               href="mailto:contato@esmeraldacompany.com.br"
             >
-             contato@esmeraldacompany.com.br
+              contato@esmeraldacompany.com.br
             </Link>
           </div>
           <div>
@@ -41,9 +41,7 @@ const SectionContact = () => (
               <MessageCircle />
             </div>
             <h3 className="mt-6 font-semibold text-xl">Agendamento</h3>
-            <p className="my-2.5 text-muted-foreground">
-              Vamos conversar.
-            </p>
+            <p className="my-2.5 text-muted-foreground">Vamos conversar.</p>
             <Link className="font-medium text-primary" href="#">
               Agendar uma Conversa
             </Link>
@@ -54,7 +52,7 @@ const SectionContact = () => (
             </div>
             <h3 className="mt-6 font-semibold text-xl">Contato</h3>
             <p className="my-2.5 text-muted-foreground">
-            Um Novo Conceito, começa com um "Olá"
+              Um Novo Conceito, começa com um &quot;Olá&quot;
             </p>
             <Link
               className="font-medium text-primary"

@@ -2,7 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/lib/client";
 import HeroSection from "@/components/HeroSection";
 import ParallaxHeader from "@/components/ParallaxHeader";
-import { SpotlightNewDemo } from "@/components/spotlight";
+import SpotlightWrapper from "@/components/SpotlightWrapper";
 import { BentoGridSecondDemo } from "@/components/GridHome";
 import CardHomeDemo from "@/components/CardHome";
 
@@ -37,7 +37,7 @@ export default async function HomePage() {
       </section>
 
       <main id="main-content" role="main" className="min-h-screen">
-        <SpotlightNewDemo />
+        <SpotlightWrapper />
       </main>
     </>
   );

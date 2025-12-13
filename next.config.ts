@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['cdn.sanity.io', 'images.unsplash.com'],
+    qualities: [75, 80, 85, 90, 100],
     remotePatterns: [
       {
         protocol: 'https',
@@ -33,18 +33,6 @@ const nextConfig: NextConfig = {
   generateEtags: false,
 
   async headers() {
-    const cspDirectives = [
-      "default-src 'self'",
-      "script-src 'self'",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://cdn.sanity.io https://images.unsplash.com https://assets.aceternity.com",
-      "font-src 'self'",
-      "connect-src 'self'",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-    ];
-
     return [
       {
         source: '/(.*)',
@@ -65,25 +53,46 @@ const nextConfig: NextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
           },
-          // Content-Security-Policy comentada temporariamente
-          // {
-          //   key: 'Content-Security-Policy',
-          //   value: cspDirectives.join('; ')
-          // },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains'
+          }
         ],
       },
-      // ... outros headers de cache
+      // Configurações de Cache para arquivos estáticos
+      {
+        source: '/:path*.{jpg,jpeg,png,webp,avif,ico,svg}',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000'
+          }
+        ],
+      },
+      {
+        source: '/:path*.{js,css}',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000'
+          }
+        ],
+      },
+      {
+        source: '/:path*.{woff,woff2,ttf,eot}',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000'
+          }
+        ],
+      },
     ]
   },
 
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  
-  // ❌ REMOVER TEMPORARIAMENTE
-  // experimental: {
-  //   optimizeCss: true,
-  // },
 
   trailingSlash: false,
 }
