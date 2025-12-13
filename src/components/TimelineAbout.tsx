@@ -5,10 +5,18 @@ import Image from "next/image";
 import Perfil from "../../public/perfil-lucas.webp";
 import { FloatingDockDemo } from "@/components/Float";
 import { useState, useEffect } from "react";
-import DottedGlowBackground from "@/components/ui/dotted-glow-background";
 import { Button } from "@/components/ui/button";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const DottedGlowBackground = dynamic(
+  () => import("@/components/ui/dotted-glow-background"),
+  {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-transparent" />,
+  }
+);
 
 interface JornadaItem {
   title: string;

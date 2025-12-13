@@ -2,7 +2,11 @@
 import HeroPage from "@/components/HeroPage";
 import { UserIcon } from "lucide-react";
 import { TimelineDemo } from "@/components/TimelineAbout";
-import Logos07Page from "@/components/ui/logos-07";
+import dynamic from "next/dynamic";
+
+const Logos07Page = dynamic(() => import("@/components/ui/logos-07"), {
+  ssr: true,
+});
 
 export default function AboutPage() {
   return (
