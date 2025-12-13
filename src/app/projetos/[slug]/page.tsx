@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PortableText, type SanityDocument } from "next-sanity";
+import { PortableText } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { client } from "@/lib/client";
@@ -13,7 +13,7 @@ import {
   RELATED_PROJECTS_QUERY,
   RECENT_PROJECTS_QUERY,
 } from "@/sanity/queries/getProjects";
-import type { Project } from "@/types/project";
+import { Project, SanityImage, Category } from "@/types/sanity";
 import {
   SITE_NAME,
   SITE_URL,
@@ -77,7 +77,7 @@ export async function generateMetadata({
     title: fullTitle,
     description,
     keywords: [
-      ...(project.categories?.map((cat: any) => cat.title) || []),
+      ...(project.categories?.map((cat: Category) => cat.title) || []),
       "projeto",
       "desenvolvimento web",
       "portfolio",
@@ -112,7 +112,7 @@ export async function generateMetadata({
 }
 
 // Componente para Structured Data
-function ProjectStructuredData({ project }: { project: any }) {
+function ProjectStructuredData({ project }: { project: Project }) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -141,7 +141,7 @@ function ProjectStructuredData({ project }: { project: any }) {
     },
     genre: project.categories?.[0]?.title || "Desenvolvimento Web",
     keywords:
-      project.categories?.map((cat: any) => cat.title).join(", ") ||
+      project.categories?.map((cat: Category) => cat.title).join(", ") ||
       "tecnologia",
     url: `https://esmeraldacompany.com.br/projetos/${project.slug}`,
     ...(project.linkDemo && {
@@ -165,7 +165,7 @@ function ProjectStructuredData({ project }: { project: any }) {
 // Componentes customizados do PortableText
 const PortableTextComponents = {
   types: {
-    image: ({ value }: any) => {
+    image: ({ value }: { value: SanityImage }) => {
       if (!value?.asset?._ref) return null;
 
       const imageUrl = urlFor(value)
@@ -221,14 +221,15 @@ async function RelatedProjects({ currentSlug }: { currentSlug: string }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {relatedProjects.map((project: any) => (
+      {relatedProjects.map((project: Project) => (
         <BlogCard
           key={project._id}
           post={{
             ...project,
             slug: project.slug,
+            publishedAt: project.publishedAt || "",
             categories:
-              project.categories?.map((cat: any) => ({
+              project.categories?.map((cat: Category) => ({
                 title: cat.title,
                 slug: cat.slug,
               })) || [],
@@ -367,7 +368,7 @@ export default async function ProjectPage({
               Descubra mais projetos que podem te interessar
             </p>
           </div>
-          <RelatedProjects currentSlug={project.slug} />
+          <RelatedProjects currentSlug={project.slug.current} />
         </section>
         <div className="flex justify-center pt-8">
           <Link

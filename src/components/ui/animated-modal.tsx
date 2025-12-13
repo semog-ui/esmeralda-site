@@ -79,7 +79,9 @@ export const ModalBody = ({
 
   const modalRef = useRef<HTMLDivElement>(null);
   const { setOpen } = useModal();
-  useOutsideClick(modalRef as React.RefObject<HTMLDivElement>, () => setOpen(false));
+  useOutsideClick(modalRef as React.RefObject<HTMLDivElement>, () =>
+    setOpen(false)
+  );
 
   return (
     <AnimatePresence>
@@ -221,7 +223,7 @@ const CloseIcon = () => {
 // Add it in a separate file, I've added here for simplicity
 export const useOutsideClick = (
   ref: React.RefObject<HTMLDivElement>,
-  callback: Function
+  callback: (event: any) => void
 ) => {
   useEffect(() => {
     const listener = (event: any) => {

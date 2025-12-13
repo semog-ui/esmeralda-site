@@ -151,7 +151,7 @@ export function TimelineDemo() {
                   <p className="text-base lg:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed font-light">
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                       Minha jornada
-                    </span>{" "}
+                    </span>
                     começou na adolescência, explorando o mundo digital. Por
                     anos, interagi com máquinas sem compreender sua linguagem,
                     até descobrir que é possível traduzir pensamentos abstratos
@@ -163,7 +163,7 @@ export function TimelineDemo() {
                   <p className="text-base lg:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed font-light">
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                       Minha motivação
-                    </span>{" "}
+                    </span>
                     vai além do "gostar de programar". É sobre compreender como
                     cada linha de código pode criar padrões significativos,
                     transformar complexidade em clareza e construir sistemas que

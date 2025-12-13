@@ -9,6 +9,7 @@ export interface SanityImage {
   alt?: string;
   hotspot?: unknown; 
   crop?: unknown;
+  caption?: string;
 }
 
 export interface Category {
@@ -34,7 +35,7 @@ export interface Post {
   title: string;
   slug: { current: string };
   publishedAt: string;
-  mainImage?: SanityImage;
+  mainImage?: SanityImage | string;
   excerpt?: string;
   body?: PortableTextBlock[];
   author?: Author;
