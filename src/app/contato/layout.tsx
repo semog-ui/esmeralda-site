@@ -1,16 +1,16 @@
 import { Metadata } from "next";
 import {
-  SITE_NAME,
   SITE_URL,
   SITE_KEYWORDS,
   OPEN_GRAPH,
   TWITTER,
-  ROBOTS_CONFIG
+  ROBOTS_CONFIG,
 } from "@/app/constants";
 
 export const metadata: Metadata = {
-  title: `Contato | ${SITE_NAME}`,
-  description: "Entre em contato com o laboratório Esmeralda. Estamos prontos para transformar suas ideias em soluções tecnológicas inovadoras.",
+  title: `Contato`,
+  description:
+    "Entre em contato com o laboratório Esmeralda. Estamos prontos para transformar suas ideias em soluções tecnológicas inovadoras.",
   keywords: [
     "contato",
     "orçamento",
@@ -22,26 +22,28 @@ export const metadata: Metadata = {
     "inovação",
     "esmeralda contato",
     "orçamento projeto",
-    ...SITE_KEYWORDS
+    ...SITE_KEYWORDS,
   ],
   openGraph: {
     ...OPEN_GRAPH,
-    title: "Contato | Vamos Conversar",
-    description: "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas inovadoras.",
+    title: "Contato",
+    description:
+      "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas inovadoras.",
     url: `${SITE_URL}/contato`,
     images: [
       {
         url: `${SITE_URL}/og-contato.jpg`,
         width: 1200,
         height: 630,
-        alt: "Contato Esmeralda - Vamos Conversar",
+        alt: "Contato Esmeralda",
       },
     ],
   },
   twitter: {
     ...TWITTER,
-    title: "Contato | Esmeralda - Vamos Conversar",
-    description: "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas.",
+    title: "Contato",
+    description:
+      "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas.",
     images: [`${SITE_URL}/og-contato.jpg`],
   },
   alternates: {
@@ -64,28 +66,30 @@ export default function ContactLayout({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ContactPage",
-            "name": "Página de Contato - Esmeralda",
-            "description": "Entre em contato com o laboratório Esmeralda para projetos de desenvolvimento web e soluções tecnológicas.",
-            "url": "https://esmeraldacompany.com.br/contato", 
-            "publisher": {
+            name: "Página de Contato - Esmeralda",
+            description:
+              "Entre em contato com o laboratório Esmeralda para projetos de desenvolvimento web e soluções tecnológicas.",
+            url: "https://esmeraldacompany.com.br/contato",
+            publisher: {
               "@type": "Organization",
-              "name": "Esmeralda",
-              "description": "Laboratório de consciência lógica e desenvolvimento tecnológico",
-              "logo": {
+              name: "Esmeralda",
+              description:
+                "Laboratório de consciência lógica e desenvolvimento tecnológico",
+              logo: {
                 "@type": "ImageObject",
-                "url": "https://esmeraldacompany.com.br/Esmeralda-logo.png" 
-              }
+                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
+              },
             },
-            "mainEntityOfPage": {
+            mainEntityOfPage: {
               "@type": "WebPage",
-              "@id": "https://esmeraldacompany.com.br/contato"
+              "@id": "https://esmeraldacompany.com.br/contato",
             },
-            "potentialAction": {
+            potentialAction: {
               "@type": "ContactPoint",
-              "contactType": "customer service",
-              "availableLanguage": "Portuguese"
-            }
-          })
+              contactType: "customer service",
+              availableLanguage: "Portuguese",
+            },
+          }),
         }}
       />
       {children}

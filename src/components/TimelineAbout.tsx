@@ -4,7 +4,7 @@ import { Timeline } from "@/components/ui/timeline";
 import Image from "next/image";
 import Perfil from "../../public/perfil-lucas.webp";
 import { FloatingDockDemo } from "@/components/Float";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
 import Link from "next/link";

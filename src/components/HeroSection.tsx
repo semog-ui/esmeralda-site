@@ -1,5 +1,5 @@
 "use client";
-import * as motion from "motion/react-client";
+// import * as motion from "motion/react-client";
 import { useScroll, useTransform, motion as m } from "framer-motion";
 import { FlipWords } from "./ui/flip-words";
 import Image from "next/image";

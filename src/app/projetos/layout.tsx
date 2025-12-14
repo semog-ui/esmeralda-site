@@ -2,8 +2,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Projetos | Portfólio e Cases",
-  description: "Explore todos os projetos do laboratório Esmeralda. Desenvolvimento web, design system, automações e soluções tecnológicas inovadoras.",
+  title: "Projetos",
+  description:
+    "Explore todos os projetos do laboratório Esmeralda. Desenvolvimento web, design system, automações e soluções tecnológicas inovadoras.",
   keywords: [
     "projetos",
     "portfólio",
@@ -14,18 +15,19 @@ export const metadata: Metadata = {
     "design system",
     "automação",
     "soluções tecnológicas",
-    "laboratório esmeralda"
+    "laboratório esmeralda",
   ],
   openGraph: {
-    title: "Projetos | Esmeralda - Portfólio e Cases",
-    description: "Explore todos os projetos do laboratório Esmeralda. Desenvolvimento web, design system e soluções tecnológicas.",
+    title: "Projetos",
+    description:
+      "Explore todos os projetos do laboratório Esmeralda. Desenvolvimento web, design system e soluções tecnológicas.",
     url: "/projetos",
     siteName: "Esmeralda",
     locale: "pt_BR",
     type: "website",
     images: [
       {
-        url: "/og-projetos.jpg", 
+        url: "/og-projetos.jpg",
         width: 1200,
         height: 630,
         alt: "Projetos Esmeralda - Portfólio e Cases",
@@ -34,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Projetos | Esmeralda - Portfólio e Cases",
+    title: "Projetos",
     description: "Explore todos os projetos do laboratório Esmeralda.",
     images: ["/og-projetos.jpg"],
   },
@@ -61,27 +63,29 @@ export default function ProjectsLayout({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            "name": "Projetos Esmeralda",
-            "description": "Portfólio de projetos de desenvolvimento web, design system e soluções tecnológicas do laboratório Esmeralda.",
-            "url": "https://esmeraldacompany.com.br/projetos", 
-            "publisher": {
+            name: "Projetos",
+            description:
+              "Portfólio de projetos de desenvolvimento web, design system e soluções tecnológicas do laboratório Esmeralda.",
+            url: "https://esmeraldacompany.com.br/projetos",
+            publisher: {
               "@type": "Organization",
-              "name": "Esmeralda",
-              "description": "Laboratório de consciência lógica e desenvolvimento tecnológico",
-              "logo": {
+              name: "Esmeralda",
+              description:
+                "Laboratório de consciência lógica e desenvolvimento tecnológico",
+              logo: {
                 "@type": "ImageObject",
-                "url": "https://esmeraldacompany.com.br/Esmeralda-logo.png" 
-              }
+                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
+              },
             },
-            "mainEntityOfPage": {
+            mainEntityOfPage: {
               "@type": "WebPage",
-              "@id": "https://esmeralda.dev/projetos"
+              "@id": "https://esmeralda.dev/projetos",
             },
-            "about": {
+            about: {
               "@type": "Thing",
-              "name": "Desenvolvimento Web"
-            }
-          })
+              name: "Desenvolvimento Web",
+            },
+          }),
         }}
       />
       {children}

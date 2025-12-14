@@ -27,7 +27,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     if (image.asset && image.asset._ref) {
       // Converte a referência do Sanity para URL
       const ref = image.asset._ref;
-      const [file, id, dimensions, format] = ref.split("-");
+      const [, id, dimensions, format] = ref.split("-");
       return `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}/${id}-${dimensions}.${format}`;
     }
 

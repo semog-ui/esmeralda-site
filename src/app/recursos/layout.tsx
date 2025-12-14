@@ -2,12 +2,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Recursos | Esmeralda",
-  description: "Explore uma coleção de recursos cuidadosamente selecionados para aprimorar suas habilidades e conhecimentos em tecnologia e desenvolvimento.",
-  keywords: ["recursos", "tecnologia", "desenvolvimento", "ferramentas", "tutoriais", "Esmeralda"],
+  title: "Recursos",
+  description:
+    "Explore uma coleção de recursos cuidadosamente selecionados para aprimorar suas habilidades e conhecimentos em tecnologia e desenvolvimento.",
+  keywords: [
+    "recursos",
+    "tecnologia",
+    "desenvolvimento",
+    "ferramentas",
+    "tutoriais",
+    "Esmeralda",
+  ],
   openGraph: {
-    title: "Recursos | Esmeralda",
-    description: "Explore uma coleção de recursos cuidadosamente selecionados para aprimorar suas habilidades e conhecimentos.",
+    title: "Recursos",
+    description:
+      "Explore uma coleção de recursos cuidadosamente selecionados para aprimorar suas habilidades e conhecimentos.",
     type: "website",
     locale: "pt_BR",
   },

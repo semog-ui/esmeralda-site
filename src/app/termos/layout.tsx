@@ -12,7 +12,7 @@ import {
 // import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidade | Esmeralda Company",
+  title: "Política de Privacidade",
   description:
     "Conheça nossa Política de Privacidade. Saiba como a Esmeralda Company protege seus dados, utiliza cookies e garante sua segurança online. Última atualização: 4 de Outubro de 2025.",
   keywords: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     ...OPEN_GRAPH,
-    title: "Política de Privacidade | Esmeralda Company",
+    title: "Política de Privacidade",
     description:
       "Política de Privacidade da Esmeralda Company - Proteção de dados, cookies e segurança online.",
     url: `${SITE_URL}/termos-e-condicoes`,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     ...TWITTER,
     card: "summary" as const,
-    title: "Política de Privacidade | Esmeralda Company",
+    title: "Política de Privacidade",
     description: "Conheça nossa Política de Privacidade e Termos de Uso.",
     images: [`${SITE_URL}/og-termos.jpg`],
   },
@@ -73,7 +73,7 @@ export default function TermsLayout({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: "Política de Privacidade - Esmeralda Company",
+            name: "Política de Privacidade",
             description:
               "Política de Privacidade e Termos de Uso da Esmeralda Company",
             url: "https://esmeraldacompany.com.br/termos-e-condicoes",

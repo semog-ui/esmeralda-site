@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://esmeraldacompany.com.br
+
+# Sitemaps
+Sitemap: https://esmeraldacompany.com.br/sitemap.xml

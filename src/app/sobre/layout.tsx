@@ -6,16 +6,17 @@ import {
   SITE_KEYWORDS,
   OPEN_GRAPH,
   TWITTER,
-  ROBOTS_CONFIG
+  ROBOTS_CONFIG,
 } from "@/app/constants";
 
 export const metadata: Metadata = {
-  title: `Sobre | ${SITE_NAME}`,
-  description: "Conheça a história por trás da Esmeralda - laboratório de consciência lógica. Descubra nossa missão, valores e jornada em tecnologia e inovação.",
+  title: `Sobre`,
+  description:
+    "Conheça a história por trás da Esmeralda - laboratório de consciência lógica. Descubra nossa missão, valores e jornada em tecnologia e inovação.",
   keywords: [
     "sobre esmeralda",
     "história",
-    "missão", 
+    "missão",
     "valores",
     "laboratório tecnológico",
     "consciência lógica",
@@ -23,12 +24,13 @@ export const metadata: Metadata = {
     "inovação",
     "tecnologia",
     "portfolio",
-    ...SITE_KEYWORDS
+    ...SITE_KEYWORDS,
   ],
   openGraph: {
     ...OPEN_GRAPH,
-    title: "Sobre | Por trás do Código",
-    description: "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
+    title: "Sobre",
+    description:
+      "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
     url: `${SITE_URL}/sobre`,
     images: [
       {
@@ -41,8 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     ...TWITTER,
-    title: "Sobre | Por trás do Código",
-    description: "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
+    title: "Sobre",
+    description:
+      "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
     images: [`${SITE_URL}/og-sobre.jpg`],
   },
   alternates: {
@@ -50,7 +53,6 @@ export const metadata: Metadata = {
   },
   robots: ROBOTS_CONFIG,
 };
-
 
 export default function AboutLayout({
   children,
@@ -66,22 +68,23 @@ export default function AboutLayout({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
-            "name": "Sobre a Esmeralda",
-            "description": "Laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.",
-            "url": "https://esmeraldacompany.com.br/sobre", 
-            "publisher": {
+            name: "Sobre a Esmeralda",
+            description:
+              "Laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.",
+            url: "https://esmeraldacompany.com.br/sobre",
+            publisher: {
               "@type": "Organization",
-              "name": "Esmeralda",
-              "logo": {
+              name: "Esmeralda",
+              logo: {
                 "@type": "ImageObject",
-                "url": "https://esmeraldacompany.com.br/Esmeralda-logo.png" 
-              }
+                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
+              },
             },
-            "mainEntityOfPage": {
-              "@type": "WebPage", 
-              "@id": "https://esmeralda.dev/sobre"
-            }
-          })
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": "https://esmeralda.dev/sobre",
+            },
+          }),
         }}
       />
       {children}
