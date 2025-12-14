@@ -14,14 +14,9 @@ import {
   RECENT_PROJECTS_QUERY,
 } from "@/sanity/queries/getProjects";
 import { Project, SanityImage, Category } from "@/types/sanity";
-import {
-  SITE_NAME,
-  SITE_URL,
-  SITE_KEYWORDS,
-  OPEN_GRAPH,
-  TWITTER,
-  ROBOTS_CONFIG,
-} from "@/app/constants";
+import { constructMetadata } from "@/lib/metadata"; // Novo import
+import { JsonLd } from "@/components/JsonLd"; // Novo import
+import { SITE_NAME, SITE_URL, SITE_LOGO } from "@/app/constants"; // Constantes limpas
 
 const { projectId, dataset } = client.config();
 
@@ -30,139 +25,54 @@ const urlFor = (source: SanityImageSource) =>
     ? imageUrlBuilder({ projectId, dataset }).image(source)
     : null;
 
+// ==========================================
+// 1. GERAÇÃO DE METADATA OTIMIZADA
+// ==========================================
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-
   const project = await client.fetch(PROJECT_METADATA_QUERY, { slug });
 
   if (!project) {
-    return {
+    return constructMetadata({
       title: "Projeto Não Encontrado",
-      description: "O projeto que você está procurando não foi encontrado.",
-    };
+      description: "O projeto que você procura não existe.",
+      noIndex: true,
+    });
   }
 
-  // Garantir que imageUrl nunca seja undefined
+  // Gera URL da imagem para o SEO
   const imageUrl = project?.mainImage
-    ? urlFor(project.mainImage)?.width(1200).height(630).url() ||
-      `${SITE_URL}/og-projetos.jpg`
-    : `${SITE_URL}/og-projetos.jpg`;
+    ? urlFor(project.mainImage)?.width(1200).height(630).url()
+    : undefined;
 
+  // Cria descrição otimizada
   const description = `Confira o projeto ${project.title} ${
     project.categories?.[0]?.title
       ? `na categoria ${project.categories[0].title}`
       : ""
   }. ${project.linkDemo ? "Demo disponível." : ""}`;
 
-  const fullTitle = `${project.title} | Projeto ${SITE_NAME}`;
-  const fullUrl = `${SITE_URL}/projetos/${slug}`;
-
-  // Garantir que temos arrays válidos para imagens
-  const openGraphImages = [
-    {
-      url: imageUrl, // Agora imageUrl é garantidamente string
-      width: 1200,
-      height: 630,
-      alt: project.title,
-    },
-  ];
-
-  const twitterImages = [imageUrl]; // Agora imageUrl é garantidamente string
-
-  return {
-    title: fullTitle,
+  return constructMetadata({
+    title: project.title, // O template adicionará "| Esmeralda Company"
     description,
+    image: imageUrl, // Passa a imagem do projeto
+    type: "article", // Ou "website", mas article permite data de publicação
+    publishedTime: project.publishedAt,
     keywords: [
-      ...(project.categories?.map((cat: Category) => cat.title) || []),
       "projeto",
-      "desenvolvimento web",
       "portfolio",
-      ...SITE_KEYWORDS,
+      ...(project.categories?.map((cat: Category) => cat.title) || []),
     ],
-    openGraph: {
-      ...OPEN_GRAPH,
-      title: fullTitle,
-      description,
-      type: "article" as const,
-      publishedTime: project.publishedAt,
-      url: fullUrl,
-      images: openGraphImages,
-    },
-    twitter: {
-      ...TWITTER,
-      title: fullTitle,
-      description,
-      images: twitterImages,
-    },
-    alternates: {
-      canonical: fullUrl,
-    },
-    robots: ROBOTS_CONFIG,
-    other: {
-      "og:site_name": SITE_NAME,
-      "article:published_time": project.publishedAt,
-      ...(project.linkDemo && { "og:see_also": project.linkDemo }),
-      ...(project.linkGithub && { "og:see_also": project.linkGithub }),
-    },
-  };
+  });
 }
 
-// Componente para Structured Data
-function ProjectStructuredData({ project }: { project: Project }) {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: project.title,
-    description: `Projeto ${project.title} do laboratório Esmeralda`,
-    image: project.mainImage
-      ? urlFor(project.mainImage)?.width(1200).height(630).url()
-      : "https://esmeralda.dev/og-projetos.jpg",
-    datePublished: project.publishedAt,
-    dateModified: project.publishedAt,
-    author: {
-      "@type": "Organization",
-      name: "Esmeralda",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Esmeralda",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://esmeraldacompany.com.br/projetos/${project.slug}`,
-    },
-    genre: project.categories?.[0]?.title || "Desenvolvimento Web",
-    keywords:
-      project.categories?.map((cat: Category) => cat.title).join(", ") ||
-      "tecnologia",
-    url: `https://esmeraldacompany.com.br/projetos/${project.slug}`,
-    ...(project.linkDemo && {
-      workExample: {
-        "@type": "SoftwareSourceCode",
-        codeRepository: project.linkDemo,
-        programmingLanguage: "JavaScript",
-        runtimePlatform: "Web",
-      },
-    }),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-    />
-  );
-}
-
-// Componentes customizados do PortableText
+// ==========================================
+// CONFIGURAÇÃO DO PORTABLE TEXT
+// ==========================================
 const PortableTextComponents = {
   types: {
     image: ({ value }: { value: SanityImage }) => {
@@ -197,7 +107,7 @@ const PortableTextComponents = {
   },
 };
 
-// Component para projetos relacionados
+// Componente para projetos relacionados
 async function RelatedProjects({ currentSlug }: { currentSlug: string }) {
   let relatedProjects = await client.fetch(RELATED_PROJECTS_QUERY, {
     currentSlug,
@@ -241,6 +151,9 @@ async function RelatedProjects({ currentSlug }: { currentSlug: string }) {
   );
 }
 
+// ==========================================
+// PÁGINA PRINCIPAL
+// ==========================================
 export default async function ProjectPage({
   params,
 }: {
@@ -264,10 +177,50 @@ export default async function ProjectPage({
     );
   }
 
+  // 2. Configuração do Structured Data (JSON-LD)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    headline: project.title,
+    description: `Projeto ${project.title} desenvolvido por ${SITE_NAME}`,
+    image: projectImageUrl || `${SITE_URL}/og-projetos.jpg`,
+    datePublished: project.publishedAt,
+    dateModified: project.publishedAt,
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}${SITE_LOGO}`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/projetos/${project.slug.current}`,
+    },
+    genre: project.categories?.[0]?.title || "Desenvolvimento Web",
+    keywords: project.categories?.map((cat) => cat.title).join(", "),
+    // Se tiver link de código ou demo, adiciona como exemplo de software
+    ...(project.linkDemo && {
+      workExample: {
+        "@type": "SoftwareApplication",
+        name: project.title,
+        applicationCategory: "WebApplication",
+        url: project.linkDemo,
+        ...(project.linkGithub && { codeRepository: project.linkGithub }),
+      },
+    }),
+  };
+
   return (
     <>
-      {/* Structured Data para SEO */}
-      <ProjectStructuredData project={project} />
+      {/* 3. Injeção do Schema */}
+      <JsonLd data={jsonLd} />
 
       {/* Header */}
       <header

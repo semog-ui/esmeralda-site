@@ -8,6 +8,9 @@ import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Post, SanityImage } from "@/types/sanity";
+import { constructMetadata } from "@/lib/metadata"; // Novo construtor
+import { JsonLd } from "@/components/JsonLd"; // Novo componente
+import { SITE_URL, SITE_NAME, SITE_LOGO } from "@/app/constants"; // Constantes
 
 // Query do post principal para metadata
 const POST_METADATA_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -88,7 +91,9 @@ const urlFor = (source: SanityImageSource) =>
     ? imageUrlBuilder({ projectId, dataset }).image(source)
     : null;
 
-// Metadata tipada corretamente
+// ==========================================
+// 1. GERAÇÃO DE METADATA OTIMIZADA
+// ==========================================
 export async function generateMetadata({
   params,
 }: {
@@ -98,58 +103,34 @@ export async function generateMetadata({
   const post = await client.fetch<Post>(POST_METADATA_QUERY, { slug });
 
   if (!post) {
-    return {
+    return constructMetadata({
       title: "Post Não Encontrado",
-      description: "O post que você está procurando não foi encontrado.",
-    };
+      description: "O conteúdo que você procura não existe.",
+      noIndex: true, // Evita indexar página de erro 404 de conteúdo
+    });
   }
 
-  const imageUrl = post?.mainImage
+  const imageUrl = post.mainImage
     ? urlFor(post.mainImage)?.width(1200).height(630).url()
-    : "/og-blog.jpg";
+    : undefined;
 
-  // Tipagem explícita para categories evita erro de 'any'
-  const firstCategory = post.categories?.[0]?.title || "";
   const description =
-    post.excerpt ||
-    `Confira o post "${post.title}" no blog da Esmeralda. ${firstCategory ? `Categoria: ${firstCategory}` : ""}`;
+    post.excerpt || `Leia ${post.title} no blog da ${SITE_NAME}.`;
 
-  const keywords = [
-    ...(post.categories?.map((cat) => cat.title) || []),
-    "blog tecnologia",
-    "desenvolvimento web",
-    post.author?.name || "Esmeralda",
-  ];
-
-  return {
-    title: `${post.title} | Blog Esmeralda`,
+  return constructMetadata({
+    title: post.title,
     description,
-    keywords,
-    openGraph: {
-      title: post.title,
-      description,
-      type: "article",
-      publishedTime: post.publishedAt,
-      authors: [post.author?.name || "Esmeralda"],
-      images: [
-        {
-          url: imageUrl || "/og-blog.jpg",
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description,
-      images: [imageUrl || "/og-blog.jpg"],
-    },
-  };
+    image: imageUrl, // Passa a imagem do post para OG/Twitter
+    type: "article", // Define como artigo para o Facebook/LinkedIn
+    publishedTime: post.publishedAt,
+    authors: post.author ? [{ name: post.author.name }] : undefined,
+    keywords: post.categories?.map((c) => c.title),
+  });
 }
 
-// Tipagem do PortableTextComponents
+// ==========================================
+// CONFIGURAÇÃO DO PORTABLE TEXT
+// ==========================================
 const PortableTextComponents = {
   types: {
     image: ({ value }: { value: SanityImage }) => {
@@ -220,6 +201,9 @@ async function RelatedPosts({ currentSlug }: { currentSlug: string }) {
   );
 }
 
+// ==========================================
+// COMPONENTE DA PÁGINA PRINCIPAL
+// ==========================================
 export default async function PostPage({
   params,
 }: {
@@ -246,8 +230,38 @@ export default async function PostPage({
     ? urlFor(post.mainImage)?.width(1200).height(600).url()
     : null;
 
+  // 2. Criação do JSON-LD (Structured Data) para Artigo
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt || post.title,
+    image: postImageUrl || `${SITE_URL}/og-blog.jpg`, // Fallback de imagem
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt, // Idealmente seria _updatedAt do Sanity se disponível
+    author: {
+      "@type": "Person",
+      name: post.author?.name || SITE_NAME,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}${SITE_LOGO}`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${slug}`,
+    },
+  };
+
   return (
     <>
+      {/* 3. Injeção do Schema no Cabeçalho */}
+      <JsonLd data={jsonLd} />
+
       <main className="container mx-auto min-h-screen max-w-4xl p-8 flex flex-col gap-6 pt-24 lg:pt-32">
         <Link
           href="/blog"

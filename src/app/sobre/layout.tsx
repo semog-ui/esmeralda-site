@@ -1,16 +1,15 @@
-// app/sobre/layout.tsx
-import type { Metadata } from "next";
+import { constructMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/JsonLd";
 import {
-  SITE_NAME,
   SITE_URL,
-  SITE_KEYWORDS,
-  OPEN_GRAPH,
-  TWITTER,
-  ROBOTS_CONFIG,
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  SITE_LOGO,
 } from "@/app/constants";
 
-export const metadata: Metadata = {
-  title: `Sobre`,
+// 1. Geração de Metadata Dinâmico
+export const metadata = constructMetadata({
+  title: "Sobre",
   description:
     "Conheça a história por trás da Esmeralda - laboratório de consciência lógica. Descubra nossa missão, valores e jornada em tecnologia e inovação.",
   keywords: [
@@ -24,69 +23,41 @@ export const metadata: Metadata = {
     "inovação",
     "tecnologia",
     "portfolio",
-    ...SITE_KEYWORDS,
   ],
-  openGraph: {
-    ...OPEN_GRAPH,
-    title: "Sobre",
-    description:
-      "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
-    url: `${SITE_URL}/sobre`,
-    images: [
-      {
-        url: `${SITE_URL}/og-sobre.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "Sobre Esmeralda - Por trás do Código",
-      },
-    ],
-  },
-  twitter: {
-    ...TWITTER,
-    title: "Sobre",
-    description:
-      "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
-    images: [`${SITE_URL}/og-sobre.jpg`],
-  },
-  alternates: {
-    canonical: `${SITE_URL}/sobre`,
-  },
-  robots: ROBOTS_CONFIG,
-};
+  image: "/hero-sobre.webp", // Imagem específica desta seção
+});
 
 export default function AboutLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // 2. Configuração do Schema (JSON-LD) para Página Sobre
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: `Sobre a ${SITE_NAME}`,
+    description:
+      "Laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.",
+    url: `${SITE_URL}/sobre`,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}${SITE_LOGO}`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/sobre`,
+    },
+  };
+
   return (
     <>
-      {/* Structured Data para SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            name: "Sobre a Esmeralda",
-            description:
-              "Laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.",
-            url: "https://esmeraldacompany.com.br/sobre",
-            publisher: {
-              "@type": "Organization",
-              name: "Esmeralda",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
-              },
-            },
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": "https://esmeralda.dev/sobre",
-            },
-          }),
-        }}
-      />
+      <JsonLd data={jsonLd} />
       {children}
     </>
   );

@@ -1,16 +1,18 @@
-import { Metadata } from "next";
+import { constructMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/JsonLd";
 import {
   SITE_URL,
-  SITE_KEYWORDS,
-  OPEN_GRAPH,
-  TWITTER,
-  ROBOTS_CONFIG,
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  SITE_LOGO,
 } from "@/app/constants";
 
-export const metadata: Metadata = {
-  title: `Contato`,
+// 1. Geração de Metadata Dinâmico
+export const metadata = constructMetadata({
+  title: "Contato",
   description:
     "Entre em contato com o laboratório Esmeralda. Estamos prontos para transformar suas ideias em soluções tecnológicas inovadoras.",
+  // Keywords específicas desta página (serão mescladas com as globais)
   keywords: [
     "contato",
     "orçamento",
@@ -22,76 +24,47 @@ export const metadata: Metadata = {
     "inovação",
     "esmeralda contato",
     "orçamento projeto",
-    ...SITE_KEYWORDS,
   ],
-  openGraph: {
-    ...OPEN_GRAPH,
-    title: "Contato",
-    description:
-      "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas inovadoras.",
-    url: `${SITE_URL}/contato`,
-    images: [
-      {
-        url: `${SITE_URL}/og-contato.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "Contato Esmeralda",
-      },
-    ],
-  },
-  twitter: {
-    ...TWITTER,
-    title: "Contato",
-    description:
-      "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas.",
-    images: [`${SITE_URL}/og-contato.jpg`],
-  },
-  alternates: {
-    canonical: `${SITE_URL}/contato`,
-  },
-  robots: ROBOTS_CONFIG,
-};
+  // Se tiver uma imagem específica de contato, descomente abaixo:
+  image: "/hero-contato.webp",
+});
 
 export default function ContactLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // 2. Configuração do Schema (JSON-LD) para Página de Contato
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: `Página de Contato - ${SITE_NAME}`,
+    description:
+      "Entre em contato com o laboratório Esmeralda para projetos de desenvolvimento web e soluções tecnológicas.",
+    url: `${SITE_URL}/contato`,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}${SITE_LOGO}`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/contato`,
+    },
+    potentialAction: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      availableLanguage: "Portuguese",
+    },
+  };
+
   return (
     <>
-      {/* Structured Data para SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ContactPage",
-            name: "Página de Contato - Esmeralda",
-            description:
-              "Entre em contato com o laboratório Esmeralda para projetos de desenvolvimento web e soluções tecnológicas.",
-            url: "https://esmeraldacompany.com.br/contato",
-            publisher: {
-              "@type": "Organization",
-              name: "Esmeralda",
-              description:
-                "Laboratório de consciência lógica e desenvolvimento tecnológico",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
-              },
-            },
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": "https://esmeraldacompany.com.br/contato",
-            },
-            potentialAction: {
-              "@type": "ContactPoint",
-              contactType: "customer service",
-              availableLanguage: "Portuguese",
-            },
-          }),
-        }}
-      />
+      <JsonLd data={jsonLd} />
       {children}
     </>
   );

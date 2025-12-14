@@ -5,13 +5,6 @@ import HeroPage from "@/components/HeroPage";
 import SectionContact from "@/components/SectionContact";
 import { BriefcaseIcon } from "lucide-react";
 import { Project, Category } from "@/types/project";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Projetos | Esmeralda",
-  description:
-    "A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.",
-};
 
 export default async function PortfolioPage() {
   const [projectsResult, categoriesResult] = await Promise.all([

@@ -1,12 +1,14 @@
-// app/blog/page.tsx
-import type { Metadata } from "next";
+// src/app/blog/page.tsx
+import { constructMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/JsonLd";
 import BlogClientPage from "@/components/BlogClientPage";
+import { SITE_URL, SITE_NAME, SITE_LOGO } from "@/app/constants";
 
-// Metadata para SEO (apenas no server component)
-export const metadata: Metadata = {
+export const metadata = constructMetadata({
   title: "Blog",
   description:
     "Explore artigos técnicos, tendências de tecnologia, automação e inovação sustentável. Conteúdo especializado para desenvolvedores e entusiastas de tecnologia.",
+  image: "/hero-blog.webp",
   keywords: [
     "blog tecnologia",
     "desenvolvimento web",
@@ -17,74 +19,33 @@ export const metadata: Metadata = {
     "tendências tech",
     "tutoriais programação",
   ],
-  openGraph: {
-    title: "Blog",
-    description:
-      "Artigos técnicos, tendências de tecnologia e inovação sustentável.",
-    url: "/blog",
-    siteName: "Esmeralda",
-    locale: "pt_BR",
-    type: "website",
-    images: [
-      {
-        url: "/og-blog.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Blog  - Insights e Conhecimento Técnico",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog",
-    description:
-      "Artigos técnicos, tendências de tecnologia e inovação sustentável.",
-    images: ["/og-blog.jpg"],
-  },
-  alternates: {
-    canonical: "/blog",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});
 
-// Structured Data como componente separado
-function BlogStructuredData() {
-  const structuredData = {
+export default function BlogPage() {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "Blog Esmeralda",
+    name: `Blog ${SITE_NAME}`,
     description:
       "Insights, tendências e conhecimento técnico sobre tecnologia, automação e inovação sustentável.",
-    url: "https://esmeralda.dev/blog",
+    url: `${SITE_URL}/blog`,
     publisher: {
       "@type": "Organization",
-      name: "Esmeralda",
+      name: SITE_NAME,
       logo: {
         "@type": "ImageObject",
-        url: "https://esmeralda.dev/logo.png",
+        url: `${SITE_URL}${SITE_LOGO}`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": "https://esmeralda.dev/blog",
+      "@id": `${SITE_URL}/blog`,
     },
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-    />
-  );
-}
-
-export default function BlogPage() {
-  return (
     <>
-      <BlogStructuredData />
+      <JsonLd data={jsonLd} />
       <BlogClientPage />
     </>
   );

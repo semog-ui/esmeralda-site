@@ -1,7 +1,14 @@
-// app/projetos/layout.tsx
-import type { Metadata } from "next";
+import { constructMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/JsonLd";
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  SITE_LOGO,
+} from "@/app/constants";
 
-export const metadata: Metadata = {
+// 1. Geração de Metadata Dinâmico
+export const metadata = constructMetadata({
   title: "Projetos",
   description:
     "Explore todos os projetos do laboratório Esmeralda. Desenvolvimento web, design system, automações e soluções tecnológicas inovadoras.",
@@ -17,77 +24,44 @@ export const metadata: Metadata = {
     "soluções tecnológicas",
     "laboratório esmeralda",
   ],
-  openGraph: {
-    title: "Projetos",
-    description:
-      "Explore todos os projetos do laboratório Esmeralda. Desenvolvimento web, design system e soluções tecnológicas.",
-    url: "/projetos",
-    siteName: "Esmeralda",
-    locale: "pt_BR",
-    type: "website",
-    images: [
-      {
-        url: "/og-projetos.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Projetos Esmeralda - Portfólio e Cases",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Projetos",
-    description: "Explore todos os projetos do laboratório Esmeralda.",
-    images: ["/og-projetos.jpg"],
-  },
-  alternates: {
-    canonical: "/projetos",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+  image: "/hero-portfolio.webp", // Imagem específica desta seção
+});
 
 export default function ProjectsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // 2. Configuração do Schema (JSON-LD) para Coleção de Projetos
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `Projetos - ${SITE_NAME}`,
+    description:
+      "Portfólio de projetos de desenvolvimento web, design system e soluções tecnológicas do laboratório Esmeralda.",
+    url: `${SITE_URL}/projetos`,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}${SITE_LOGO}`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/projetos`,
+    },
+    about: {
+      "@type": "Thing",
+      name: "Desenvolvimento Web",
+    },
+  };
+
   return (
     <>
-      {/* Structured Data para SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: "Projetos",
-            description:
-              "Portfólio de projetos de desenvolvimento web, design system e soluções tecnológicas do laboratório Esmeralda.",
-            url: "https://esmeraldacompany.com.br/projetos",
-            publisher: {
-              "@type": "Organization",
-              name: "Esmeralda",
-              description:
-                "Laboratório de consciência lógica e desenvolvimento tecnológico",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
-              },
-            },
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": "https://esmeralda.dev/projetos",
-            },
-            about: {
-              "@type": "Thing",
-              name: "Desenvolvimento Web",
-            },
-          }),
-        }}
-      />
+      <JsonLd data={jsonLd} />
       {children}
     </>
   );
